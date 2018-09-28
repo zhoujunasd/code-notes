@@ -1,28 +1,32 @@
 <template>
-    <div class="content">
-        <div v-if="isLogin">
+        <div class="user-box flr" >
             <!-- status-icon是否显示验证通过图标 -->
             <el-form class="form" ref="formData" :model="formData" :rules="rule">
                 <el-form-item prop="email">
-                    <el-input v-model="formData.email" placeholder="邮箱" autocomplete="off"></el-input>
+                    <el-input class="input" v-model="formData.email" placeholder="邮箱" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="formData.password" type="password" placeholder="密码" autocomplete="off"></el-input>
+                    <el-input class="input" v-model="formData.password" type="password" placeholder="密码" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item >
-                    <el-button class="el-btn" type="primary" @click="submitForm('formData')">登陆</el-button>
-                    <el-button class="el-btn" >注册</el-button>
+                    <el-button type="primary" @click="submitForm('formData')">登陆</el-button>
+                    <el-button @click="$router.push('/register')">注册</el-button>
                 </el-form-item>
             </el-form>
         </div>
-        <div v-else>
-            
-        </div>
-    </div>
+        <!-- <div >
+            @success="upload_img" upload_img(url){this.avatar=url} v-model绑定的数据，在组件内监听input事件，即可
+            <imgupload v-model="avatar"></imgupload>
+        </div> -->
 </template>
 
 <script>
+import imgupload from '@/components/ImgUpload'
+
 export default {
+    components:{
+        imgupload,
+    },
     data(){
         var va_email = (rule, value, callback) => {
             if (value === '') {
@@ -43,6 +47,8 @@ export default {
                 email: "",
                 password: "",
             },
+            avatar: "",
+            checkbox: "",
             rule:{
                 email:[
                     { validator: va_email, trigger: 'blur'},
@@ -80,6 +86,7 @@ export default {
             }
         });
       },
+
     //   userLogin(){
     //       this.$axios.post('login',this.formData).then(res => {
     //           console.log(res)
@@ -90,20 +97,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.content {
+.user-box {
   width: 360px;
+  height: 340px;
   padding: 20px 30px;
-  border-radius: 5px;
+  border-radius: 6px;
   background-color: #fff;
-  box-sizing: border-box;
+  box-sizing: border-box;//将盒子的大小限制为360*340，加上padding后会自动换算padding的大小
   .form{
       margin-top: 20px;
       width: 300px;
       height: 250px;
   }
-  .el-btn{
-      width: 100%;
-      margin: 10px 0;
+
+  .input{
+    //   outline: none; //去掉input输入框聚焦时的蓝边
+  }
+
+    //深度选择器，修改样式   
+  /deep/ .el-button{
+    width: 100%;
+    margin: 10px 0;
   }
 }
 </style>

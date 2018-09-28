@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <layout></layout>
+    <!-- 在App页面加载路由，不需要引入组件 -->
+    <!-- <layout></layout> -->
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import layout from '@/components/Layout.vue'
+// import layout from '@/views/Layout.vue'
 
 export default {
-  components:{
-    layout
-  }
+  // components:{
+  // layout
+  // }
 }
 </script>
 <style lang="scss">
@@ -30,6 +28,8 @@ body{
   content: '';
   display: block;
   clear: both;
+  width: 0;
+  height: 0;
 }
 
 li {
@@ -44,21 +44,11 @@ li {
   width: 1170px;
   margin: 0 auto;
 }
-// #app {
-//   font-family: "Avenir", Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
+
+.fll{
+  float: left;
+}
+.flr{
+  float: right;
+}
 </style>

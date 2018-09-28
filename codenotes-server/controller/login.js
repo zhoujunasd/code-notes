@@ -1,6 +1,20 @@
 const {Router} = require('express')
 const router  = Router()
-const db = require('../database/model/user')
+const userDB = require('../database/model/user')
+
+router.post('/user',async (req,res) => {
+    const{username, password, email} = req.body
+    
+})
+
+
+
+
+
+
+
+
+
 
 // 获取数据（get）
 //  /user 获取全部用户的数据 /user/:id 获取单个用户的数据
@@ -13,7 +27,7 @@ const db = require('../database/model/user')
 // /user/:id  删除指定用户
 
 // router.get('/test',(req,res) => {
-//     db.find().then(data => {
+//     userDB.find().then(data => {
 //         res.json({
 //             code:200,
 //             data
@@ -23,7 +37,7 @@ const db = require('../database/model/user')
 
 router.post('/login',(req,res) => {
     let {email,password} =req.body
-    db.findOne({email}).then(data => {
+    userDB.findOne({email}).then(data => {
         // console.log(data)
 
         // if(email ==" " && password == ""){

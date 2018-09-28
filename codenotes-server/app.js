@@ -11,7 +11,9 @@ var config = require('./database/config')
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
-var index  = require('./controller/index')
+
+// var index  = require('./controller/index')
+var index  = require('./routes/index')
 
 var app = express();
 
@@ -33,7 +35,7 @@ app.use(session({
   secret:'zz',
   resave: false,//是否重新保存session
   saveUninitialized: false,  //保存初始化
-  cookie: { secure: false,expires: 1000*60*60*24*14 }, //是否是https协议
+  cookie: { secure: false,expires: 1000*60*60*24*14 }, //secure: false是否是https协议
   // cookie: {maxAge: 1000 * 60 * 60 * 24 * 30}, // 30 days
   store: new MongoStore({ mongooseConnection: config }) 
   //将session持久化到mongodb数据库。

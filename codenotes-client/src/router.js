@@ -1,11 +1,16 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import Home from "./views/Home.vue";
-import Login from "./views/Login"
 
-// const components = {
-//   login:() => import('@/views/Login')
-// }
+// 进度条方法以及样式引入
+import NProgress from "nprogress"
+import "nprogress/nprogress.css"
+
+const components = {
+  layout:() => import('@/views/Layout.vue'),
+  index:() => import('@/views/index/index.vue'),
+  register:() => import('@/views/register/register.vue'),
+  writeNote:() => import('@/views/writeNote/writeNote.vue'),
+}
 
 Vue.use(Router);
 
@@ -14,32 +19,40 @@ const router =  new Router({
   routes: [
     {
       path: "/",
-      redirect:"/login",
-    },{
-      path: "/login",
-      name: "login",
-      meta: {
-        title: "Login"
-      },
-      component: Login
+      name: "layout",
+      component: components.layout,
+      redirect:"/index",
+      children: [
+        {
+          path: "index",
+          name: "index",
+          meta: { title: "首页" },
+          component: components.index,
+        },{
+          path: "register",
+          name: "register",
+          meta: {title: "注册页面"},
+          component: components.register
+        },{
+          path: "writeNote",
+          name: "writeNote",
+          meta: {title: "写笔记"},
+          component: components.writeNote
+        }
+      ]
     },
-    // {
-    //   path: "/about",
-    //   name: "about",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () =>
-    //     import(/* webpackChunkName: "about" */ "./views/About.vue")
-    // }
   ]
 });
 
 router.beforeEach((to, from, next)=>{
+  NProgress.start();
   if(to.meta.title){
     document.title = to.meta.title
   }
   next()
 }) 
 
+router.afterEach((to,from) => {
+  NProgress.done();
+})
 export default router
