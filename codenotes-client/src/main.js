@@ -9,7 +9,9 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-import './axios'
+// 将$axios挂载在Vue原型上
+import $axios from './axios'
+Vue.prototype.$axios = $axios
 
 // 引入富文本编辑器以及样式文件
 import VueQuillEditor from 'vue-quill-editor'

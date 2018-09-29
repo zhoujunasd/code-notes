@@ -8,10 +8,10 @@
             <el-input type="text" placeholder="邮箱" v-model="formData.email"></el-input>
         </div>
         <div class="input-wrap">
-            <el-input type="password" placeholder="密码" v-model="formData.password"></el-input>
+            <el-input  type="password" placeholder="密码" v-model="formData.password"></el-input>
         </div>
         <div class="button-wrap">
-            <el-button size='' type="primary">注册</el-button>
+            <el-button size='' type="primary" @click="register">注册</el-button>
         </div>
     </div>
 </template>
@@ -25,6 +25,31 @@
                     email:"",
                     password:"",
                 }
+            }
+        },
+        methods:{
+            async register(){
+                try{
+                    const res = await this.$axios.post('/user',this.formData)
+                    if(res.code ==200){
+                        this.$message.success({
+                            message: res.msg,
+                            center: true,
+                            duration: 1000                     
+                        })
+                        setTimeout(()=>{
+                            this.$router.push('index')
+                        },500)
+                    }else{
+                        this.$message.error({
+                            message: res.msg,
+                            center: true,
+                        })
+                    }
+                }catch(err){
+
+                }
+                
             }
         }
     }

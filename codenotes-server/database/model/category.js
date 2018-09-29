@@ -6,6 +6,6 @@ const category = new mongoose.Schema({
         type: String,
         unique: true //设置唯一值
     }
-}, {versionKey: false, timestamps: {createAt: "createTime", updateAt: "updateTime"}})
+}, {versionKey: false})
 
 module.exports = mongoose.model("category", category)

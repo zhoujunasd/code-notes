@@ -9,19 +9,35 @@
                 <el-button size="medium"></el-button>
             </div> -->
             <div class="btn-wrap flr">
-                <el-button @click="$router.push('writeNote')" size="medium">写笔记</el-button>
+                <el-button @click.native="handleclick" size="medium">写笔记</el-button>
             </div>
         </div>
     </header>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
-      
     };
-  }
+  },
+  methods:{
+      handleclick(){
+          if(this.userInfo.username){
+            this.$router.push('writeNote')
+          }else{
+              this.$message.warning({
+                  message:'未登录状态下，不可写笔记！',
+                  center: true,
+                  duration: 1500
+              })
+          }
+      }
+  },
+  computed:{
+    ...mapState(['userInfo'])
+  },
 };
 </script>
 

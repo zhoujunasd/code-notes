@@ -1,18 +1,34 @@
 <template>
         <div class="user-box flr" >
-            <!-- status-icon是否显示验证通过图标 -->
-            <el-form class="form" ref="formData" :model="formData" :rules="rule">
-                <el-form-item prop="email">
-                    <el-input class="input" v-model="formData.email" placeholder="邮箱" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input class="input" v-model="formData.password" type="password" placeholder="密码" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item >
-                    <el-button type="primary" @click="submitForm('formData')">登陆</el-button>
-                    <el-button @click="$router.push('/register')">注册</el-button>
-                </el-form-item>
-            </el-form>
+            <div v-if='!userInfo.username'>
+                <!-- status-icon是否显示验证通过图标 -->
+                <el-form class="form" ref="formData" :model="formData" :rules="rule">
+                    <el-form-item prop="email">
+                        <el-input class="input" v-model="formData.email" placeholder="邮箱" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="password">
+                        <el-input @keyup.enter.native="submitForm('formData')" class="input" v-model="formData.password" type="password" placeholder="密码" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item >
+                        <el-button type="primary"  @click="submitForm('formData')">登陆</el-button>
+                        <el-button @click="$router.push('/register')">注册</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <div class="user-info" v-else>
+                <div class="img-wrap">
+                    <img :src="userInfo.avatar">
+                </div>
+                <div class="username-wrap">
+                    {{userInfo.username}}
+                </div>
+                <div class="email-wrap">
+                    {{userInfo.email}}
+                </div>
+                <div class="btn-wrap">
+                    <el-button @click.native="del_login" type='warning' size="medium">退出登录</el-button>
+                </div>
+            </div>
         </div>
         <!-- <div >
             @success="upload_img" upload_img(url){this.avatar=url} v-model绑定的数据，在组件内监听input事件，即可
@@ -21,11 +37,12 @@
 </template>
 
 <script>
-import imgupload from '@/components/ImgUpload'
+// import imgupload from '@/components/ImgUpload'
+import {mapState} from 'vuex'
 
 export default {
     components:{
-        imgupload,
+        // imgupload,
     },
     data(){
         var va_email = (rule, value, callback) => {
@@ -44,8 +61,8 @@ export default {
         };
         return{
             formData:{
-                email: "",
-                password: "",
+                email: "1879284013@qq.com",
+                password: "123456",
             },
             avatar: "",
             checkbox: "",
@@ -59,22 +76,37 @@ export default {
             }
         }
     },
+    computed:{
+        ...mapState(['userInfo'])
+    },
     methods:{
+        del_login(){
+            this.$axios.del('/loyout').then(res => {
+                let userInfo = {
+                    avatar: "",
+                    email: "",
+                    username: "",
+                }
+                if(res.code ==200){
+                    this.$message.success({ message: res.msg, center: true, duration: 1500})
+                    // this.$router.push('/index')
+                }else{
+                    this.$message.info({ message: res.msg,center: true,duration: 1500})
+                }
+                this.$store.commit('CHANGE_INFO',userInfo)
+            })
+        },
         submitForm(ruleform) {
           this.$refs[ruleform].validate((valid) => {
-            if (valid) {
-            //   try{
-            //       this.userLogin()
-            //   }catch(e){ }
+            if (valid) { 
                 this.$axios.post('/login',this.formData).then(res => {
-                    console.log(res.data)
-                    if(res.data.code == 200){
-                        this.$store.commit('CHANGE_INFO',res.data.data)
+                    // console.log(res)
+                    if(res.code == 200){
+                        this.$store.commit('CHANGE_INFO',res.data)
                         this.$message.success({
-                            message: res.data.msg,
+                            message: res.msg,
                             center: true
                         })
-                        // this.$router.push('')
                     }
                 })
             } else {
@@ -97,6 +129,36 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.user-info{
+    background-color: #409eff;
+    padding: 20px 0 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px auto;
+
+    .img-wrap img{
+        width: 120px;
+        height: 120px;
+        border: 1px solid #409eff;
+        border-radius: 6px;
+    }
+    .username-wrap{
+        margin: 10px auto;
+        font-size: 32px;
+        font-weight: 600;
+    }
+    .email-wrap{
+        margin: 10px auto 0;
+        font-size: 18px;
+    }
+    .btn-wrap{
+        margin-top: 5px;
+        text-align: center;
+        /deep/ .el-button{
+            width: 240px;
+        } 
+    }
+}
 .user-box {
   width: 360px;
   height: 340px;

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 // 用户集合
 const user  = new mongoose.Schema({
     username:String,
-    nickname:String,
+    // nickname:String,
     email:{
         type:String,
         required:true, //属性 必须

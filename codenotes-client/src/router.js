@@ -10,6 +10,7 @@ const components = {
   index:() => import('@/views/index/index.vue'),
   register:() => import('@/views/register/register.vue'),
   writeNote:() => import('@/views/writeNote/writeNote.vue'),
+  article:() => import('@/views/article/article.vue'),
 }
 
 Vue.use(Router);
@@ -38,6 +39,11 @@ const router =  new Router({
           name: "writeNote",
           meta: {title: "写笔记"},
           component: components.writeNote
+        },{
+          path: 'article/:id',
+          name:'article',
+          meta: {title: "文章"},
+          component: components.article
         }
       ]
     },
