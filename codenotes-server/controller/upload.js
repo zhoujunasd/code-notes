@@ -11,7 +11,6 @@ const accept = [
     mime.getType('gif'),
     mime.getType('webp'),
 ]
-
 // router.get('/upload')
 
 

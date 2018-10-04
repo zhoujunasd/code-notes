@@ -2,6 +2,7 @@ const {Router} = require('express')
 const router  = Router()
 const categoryModel = require('../database/model/category')
 
+// 获取全部分类
 router.get('/category',(req,res) => {
     categoryModel.find().then(data => {
         res.json({
@@ -11,8 +12,11 @@ router.get('/category',(req,res) => {
     })
 })
 
+// 获取单个分类 
 router.get('/category/:id',(req,res) => {
+    // 从req.parsms(动态路由)获取传递的数据，
     let id = req.params
+    
     categoryModel.findById(id).then(data => {
         res.json({
             code:200,
@@ -21,6 +25,7 @@ router.get('/category/:id',(req,res) => {
     })
 })
 
+// 添加分类
 router.post('/category',async (req,res,next) => {
     try{
         const {name} = req.body

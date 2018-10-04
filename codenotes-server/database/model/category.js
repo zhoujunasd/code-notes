@@ -8,4 +8,4 @@ const category = new mongoose.Schema({
     }
 }, {versionKey: false})
 
-module.exports = mongoose.model("category", category)
+module.exports = mongoose.model("category", category) 

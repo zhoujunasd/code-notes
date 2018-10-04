@@ -4,16 +4,7 @@ const userDB = require('../database/model/user')
 
 router.post('/user',async (req,res) => {
     const{username, password, email} = req.body
-    
 })
-
-
-
-
-
-
-
-
 
 
 // 获取数据（get）
