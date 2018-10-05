@@ -13,6 +13,15 @@
 // <checkbox v-model="checkbox"></checkbox>
 export default {
   props: {
+    // 父组件传值的验证，可以是数组，对象，以及一个自定义验证方法
+    // 可以设置检查属性，如required：必须，default：默认值
+    // prop验证，String,Number,Boolean,Array,Object,Date,Function(函数),Symbol
+    // type 还可以是一个自定义的构造函数，并且通过 instanceof 来进行检查确认
+    // propF: {
+    //   validator: function (value) {// 这个值必须匹配下列字符串中的一个
+    //     return ['success', 'warning', 'danger'].indexOf(value) !== -1
+    //   }
+    // }
     value: {
       type: [String, Number, Boolean]
     }
@@ -24,6 +33,8 @@ export default {
   },
   watch: {
     currentValue(val) {
+      // v-model绑定的数据，在组件内，需要设置value值以及this.$emit("input", val);进行双向绑定
+      // 以及设置value的监听函数，进行赋值
       this.$emit("input", val);
       this.$emit("change", val);
     },
@@ -64,6 +75,7 @@ export default {
     top: -10%;
     width: 0;
     height: 0;
+    // 通过设置四条border边，形成一个对号
     border-top: 4px solid transparent;
     border-right: 16px solid transparent;
     border-bottom: 3px solid #fff;

@@ -19,7 +19,8 @@ export default {};
   // 1、url('~@/assets/images/banner.jpg')
   // 2、:style="{backgroundImage: 'url(' + bg2 + ')' }"  import Bg2 from '@/../static/images/logo2.png'
   // 3、<img src="~@/../static/images/logo3.png" width="100">
-  background: url("~@/assets/images/banner.jpg") no-repeat;
+  background: url("~@/assets/images/banner.jpg") no-repeat; 
+  // background-size设置背景与容器的大小一样，需要考虑五个浏览器的兼容
   -webkit-background-size: 100% 100%;
   background-size: 100% 100%;
 

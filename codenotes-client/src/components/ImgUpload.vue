@@ -36,11 +36,14 @@ export default {
     },
     upload(event) {
       let file = event.target.files[0];
+      // event.target.files[0];图片文件的地址
+      // 将file以及token存进formData内，传给服务器
       let formData = new FormData();
       formData.append("file", file, file.name);
       formData.append("token", this.token);
       axios
         .post("https://upload-z1.qiniup.com", formData, {
+          // 在上传数据以及图片时，需要注意传递的头部格式设置
           headers: {
             "Content-Type": "multipart/form-data"
           }

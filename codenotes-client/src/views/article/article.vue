@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     getData() {
+      // 路由传参，通过params或者query，传参：$router，接受$route，
       this.$axios.get(`/article/${this.$route.params.id}`).then(res => {
         res.data.updated = res.data.updated.substring(0, 10);
         this.content = res.data;

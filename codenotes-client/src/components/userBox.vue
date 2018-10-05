@@ -66,10 +66,13 @@ export default {
       },
       avatar: "",
       checkbox: "",
+      // :rules="rule"：对验证进行绑定
       rule: {
         email: [
+          // validator：自定义验证方法
           { validator: va_email, trigger: "blur" },
           {
+            // type: "email",elementUI中对于email内置的验证方法
             type: "email",
             message: "请输入正确的邮箱地址！",
             trigger: ["blur", "change"]
@@ -78,6 +81,8 @@ export default {
         password: [
           { validator: va_pass, trigger: "blur" },
           {
+            // pattern：elementUI中表单验证中的正则表达式验证
+            // trigger：数据验证时机，blur失去焦点时验证，change内容改变时验证
             pattern: /^[a-zA-Z0-9]{3,10}$/,
             message: "请输入正确格式！",
             trigger: ["blur", "change"]
@@ -114,7 +119,16 @@ export default {
         this.$store.commit("CHANGE_INFO", userInfo);
       });
     },
+    // vue不可以直接获取元素信息，以及对元素进行直接的操作，一般通过ref=""和$refs进行数据传送以及直接操作
+    // ref用来给元素或子组件注册引用信息，引用信息将会注册在父组件的$refs对象上，
+    // 如果在普通的DOM元素上使用，引用就指向DOM元素，如果用在子组件上，引用就指向组件实例
+    // 当v-for用于元素或组件的时候，引用信息将包含DOM节点或组价实例的数组
+    // https://www.cnblogs.com/xumqfaith/p/7743387.html
+
+    // 通过ref="formData"，对表单进行绑定，获取表单元素内的引用信息
+    // 通过方法传递：@keyup.enter.native="submitForm('formData')" 后，再对元素信息进行验证，
     submitForm(ruleform) {
+      // 当所有的验证没有错误时valid为true
       this.$refs[ruleform].validate(valid => {
         if (valid) {
           this.$axios.post("/login", this.formData).then(res => {
